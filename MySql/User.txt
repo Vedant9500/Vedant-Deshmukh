@@ -1,0 +1,37 @@
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| demo               |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+7 rows in set (0.014 sec)
+
+mysql> use demo;
+Database changed
+mysql> show tables;
++----------------+
+| Tables_in_demo |
++----------------+
+| students       |
++----------------+
+1 row in set (0.014 sec)
+
+mysql> alter table Students add Address varchar(50);
+Query OK, 0 rows affected (0.395 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc Students;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| Name    | varchar(10) | YES  |     | NULL    |       |
+| Roll_no | int         | NO   | PRI | NULL    |       |
+| Address | varchar(50) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.012 sec)

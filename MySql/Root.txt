@@ -1,0 +1,39 @@
+mysql> create database demo;
+Query OK, 1 row affected (0.109 sec)
+
+mysql> use demo;
+Database changed
+mysql> create table Students ( Name varchar(10));
+Query OK, 0 rows affected (0.481 sec)
+
+mysql> show tables;
++----------------+
+| Tables_in_demo |
++----------------+
+| students       |
++----------------+
+1 row in set (0.014 sec)
+
+mysql> alter table Students add Roll_no int;
+Query OK, 0 rows affected (0.434 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table Students add primary key(Roll_no);
+Query OK, 0 rows affected (0.444 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> create user 'vedant'@localhost identified by 'vedant';
+Query OK, 0 rows affected (0.130 sec)
+
+mysql> grant all privileges on *.* to 'vedant'@localhost;
+Query OK, 0 rows affected (0.175 sec)
+
+mysql> desc Students;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| Name    | varchar(10) | YES  |     | NULL    |       |
+| Roll_no | int         | NO   | PRI | NULL    |       |
+| Address | varchar(50) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.014 sec)
