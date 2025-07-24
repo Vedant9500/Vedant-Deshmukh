@@ -96,3 +96,51 @@ mysql> show indexes from transaction;
 | transaction |          1 | index1     |            1 | Transaction_date | A         |           0 |     NULL |   NULL |      | BTREE      |         |               | YES     | NULL       |
 +-------------+------------+------------+--------------+------------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
 3 rows in set (0.114 sec)
+
+mysql> select name from customer where name like 'd%';
++---------+
+| name    |
++---------+
+| dgsdgsd |
++---------+
+1 row in set (0.007 sec)
+
+mysql> select name from customer where name like '%s%';
++---------+
+| name    |
++---------+
+| dgsdgsd |
++---------+
+1 row in set (0.004 sec)
+
+mysql> insert into customer ( customer_id, name,address,contact_no, email) values (1002,'vser hbsdvea','sdvacdfegsesfafac',359442143,'jkasfdhh@dgja.com');
+Query OK, 1 row affected (0.100 sec)
+
+mysql> insert into account (account_no,customer_id,account_type,balance) values(3234,1002,'current',134);
+Query OK, 1 row affected (0.081 sec)
+
+mysql> select * from customer;
++-------------+--------------+-------------------+-----------------+-------------------+
+| Customer_id | Name         | Address           | Contact_no      | Email             |
++-------------+--------------+-------------------+-----------------+-------------------+
+|        1001 | dgsdgsd      | dgsdsdgsdssd      | 434355233242343 | NULL              |
+|        1002 | vser hbsdvea | sdvacdfegsesfafac |       359442143 | jkasfdhh@dgja.com |
++-------------+--------------+-------------------+-----------------+-------------------+
+2 rows in set (0.004 sec)
+
+mysql> select * from account;
++------------+-------------+--------------+---------+
+| Account_no | Customer_id | Account_type | Balance |
++------------+-------------+--------------+---------+
+|       2324 |        1001 | saving       | 2542352 |
+|       3234 |        1002 | current      |     134 |
++------------+-------------+--------------+---------+
+2 rows in set (0.004 sec)
+
+mysql> select balance from account where balance between 400 and 10000000;
++---------+
+| balance |
++---------+
+| 2542352 |
++---------+
+1 row in set (0.006 sec)
