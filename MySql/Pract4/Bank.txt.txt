@@ -1,0 +1,98 @@
+mysql> use bank
+Database changed
+mysql> show tables;
++----------------+
+| Tables_in_bank |
++----------------+
+| account        |
+| customer       |
+| customer_view  |
+| employee       |
+| transaction    |
++----------------+
+5 rows in set (0.156 sec)
+
+mysql> desc account;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| Account_no   | int         | NO   | PRI | NULL    |       |
+| Customer_id  | int         | NO   | MUL | NULL    |       |
+| Account_type | varchar(20) | NO   |     | NULL    |       |
+| Balance      | int         | NO   |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+4 rows in set (0.059 sec)
+
+mysql> desc customer;
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| Customer_id | int          | NO   | PRI | NULL    |       |
+| Name        | varchar(50)  | NO   |     | NULL    |       |
+| Address     | varchar(100) | NO   |     | NULL    |       |
+| Contact_no  | bigint       | NO   |     | NULL    |       |
+| Email       | varchar(20)  | YES  |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+5 rows in set (0.023 sec)
+
+mysql> desc transaction;
++------------------+------+------+-----+---------+----------------+
+| Field            | Type | Null | Key | Default | Extra          |
++------------------+------+------+-----+---------+----------------+
+| Transaction_id   | int  | NO   | PRI | NULL    | auto_increment |
+| Account_no       | int  | NO   | MUL | NULL    |                |
+| Transaction_date | date | NO   |     | NULL    |                |
+| Transaction_time | time | NO   |     | NULL    |                |
+| Amount           | int  | NO   |     | NULL    |                |
++------------------+------+------+-----+---------+----------------+
+5 rows in set (0.015 sec)
+
+mysql> desc employee;
++-------------+-------------+------+-----+----------+----------------+
+| Field       | Type        | Null | Key | Default  | Extra          |
++-------------+-------------+------+-----+----------+----------------+
+| Employee_id | int         | NO   | PRI | NULL     | auto_increment |
+| Name        | varchar(50) | NO   |     | NULL     |                |
+| Branch      | varchar(50) | NO   |     | Talegaon |                |
+| Role        | varchar(50) | NO   |     | NULL     |                |
+| Salary      | int         | YES  |     | 90000    |                |
++-------------+-------------+------+-----+----------+----------------+
+5 rows in set (0.016 sec)
+
+mysql> select   * from account ;
++------------+-------------+--------------+---------+
+| Account_no | Customer_id | Account_type | Balance |
++------------+-------------+--------------+---------+
+|       2324 |        1001 | saving       | 2542352 |
++------------+-------------+--------------+---------+
+1 row in set (0.106 sec)
+
+mysql> select  * from customer;
++-------------+---------+--------------+-----------------+-------+
+| Customer_id | Name    | Address      | Contact_no      | Email |
++-------------+---------+--------------+-----------------+-------+
+|        1001 | dgsdgsd | dgsdsdgsdssd | 434355233242343 | NULL  |
++-------------+---------+--------------+-----------------+-------+
+1 row in set (0.012 sec)
+
+mysql> select * from customer_view;
++---------+------------+---------+
+| Name    | account_no | Balance |
++---------+------------+---------+
+| dgsdgsd |       2324 | 2542352 |
++---------+------------+---------+
+1 row in set (0.007 sec)
+
+mysql> create index index1 on transaction(transaction_date);
+Query OK, 0 rows affected (0.377 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> show indexes from transaction;
++-------------+------------+------------+--------------+------------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| Table       | Non_unique | Key_name   | Seq_in_index | Column_name      | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment | Visible | Expression |
++-------------+------------+------------+--------------+------------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| transaction |          0 | PRIMARY    |            1 | Transaction_id   | A         |           0 |     NULL |   NULL |      | BTREE      |         |               | YES     | NULL       |
+| transaction |          1 | Account_no |            1 | Account_no       | A         |           0 |     NULL |   NULL |      | BTREE      |         |               | YES     | NULL       |
+| transaction |          1 | index1     |            1 | Transaction_date | A         |           0 |     NULL |   NULL |      | BTREE      |         |               | YES     | NULL       |
++-------------+------------+------------+--------------+------------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+3 rows in set (0.114 sec)
