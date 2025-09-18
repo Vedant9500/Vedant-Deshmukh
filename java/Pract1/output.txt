@@ -1,0 +1,116 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 12
+Server version: 9.3.0 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases
+    -> ;
++--------------------+
+| Database           |
++--------------------+
+| bank               |
+| college            |
+| demo1              |
+| demo2              |
+| ecomerce           |
+| film               |
+| information_schema |
+| inventory          |
+| mohan              |
+| mysql              |
+| new                |
+| performance_schema |
+| sakila             |
+| school             |
+| school1            |
+| school_db          |
+| sys                |
+| university         |
+| world              |
++--------------------+
+19 rows in set (0.498 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| bank               |
+| college            |
+| demo1              |
+| demo2              |
+| ecomerce           |
+| film               |
+| information_schema |
+| inventory          |
+| mohan              |
+| mysql              |
+| new                |
+| performance_schema |
+| sakila             |
+| school             |
+| school1            |
+| school_db          |
+| studdemo           |
+| sys                |
+| university         |
+| world              |
++--------------------+
+20 rows in set (0.010 sec)
+
+mysql> use studdemo
+Database changed
+mysql> show tables
+    -> ;
++--------------------+
+| Tables_in_studdemo |
++--------------------+
+| students           |
++--------------------+
+1 row in set (0.155 sec)
+
+mysql> desc students;
++---------+--------------+------+-----+---------+----------------+
+| Field   | Type         | Null | Key | Default | Extra          |
++---------+--------------+------+-----+---------+----------------+
+| stud_id | int          | NO   | PRI | NULL    | auto_increment |
+| name    | varchar(100) | YES  |     | NULL    |                |
+| age     | int          | YES  |     | NULL    |                |
++---------+--------------+------+-----+---------+----------------+
+3 rows in set (0.125 sec)
+
+mysql> select * from students;
++---------+--------+------+
+| stud_id | name   | age  |
++---------+--------+------+
+|    1000 | vedant |   20 |
++---------+--------+------+
+1 row in set (0.005 sec)
+
+mysql> select * from students;
++---------+--------+------+
+| stud_id | name   | age  |
++---------+--------+------+
+|    1000 | vedant |   20 |
+|    1001 | abc    |   20 |
++---------+--------+------+
+2 rows in set (0.004 sec)
+
+mysql> create database
+
+
+
+
+
+
+
+
+
+
