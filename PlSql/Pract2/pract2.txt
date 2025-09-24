@@ -20,22 +20,28 @@ BEGIN
 
         IF days < 15 THEN 
             DBMS_OUTPUT.PUT_LINE('No fine'); 
-            UPDATE borrower  
-            SET Status = 'R' 
-            WHERE Roll_NO = R AND NameOfBook = Bn; 
 
-        ELSIF days >= 15 AND days < 30 THEN 
+        END IF;
+
+        IF days >= 15 AND days < 30 THEN 
             Amt := days * 5; 
             INSERT INTO fine (Roll_No, RDate, Amt) 
             VALUES (R, DR, Amt); 
             DBMS_OUTPUT.PUT_LINE('Fine: ' || TO_CHAR(Amt, '9990.00')); 
 
-        ELSIF days >= 30 THEN 
+        END IF;
+
+        IF days >= 30 THEN 
             Amt := days * 50; 
             INSERT INTO fine (Roll_No, RDate, Amt) 
             VALUES (R, DR, Amt); 
             DBMS_OUTPUT.PUT_LINE('Fine: ' || TO_CHAR(Amt, '9990.00')); 
+
         END IF;
+
+        UPDATE borrower  
+        SET Status = 'R' 
+        WHERE Roll_NO = R AND NameOfBook = Bn;
 
     EXCEPTION
         WHEN NO_DATA_FOUND THEN
@@ -132,3 +138,4 @@ SQL> SELECT * FROM borrower;
 SQL> SELECT * FROM fine;
 
 no rows selected
+
