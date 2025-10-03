@@ -1,11 +1,14 @@
+DECLARE
+v_increase NUMBER := 2.10;  
 BEGIN
-for rec IN (select pid, price from product where price < 5000)
-LOOP
-update product
-SET price = rec.price * 1.10 where pid = rec.pid;
+FOR rec IN (SELECT pid, price FROM product WHERE price < 5000) LOOP
+UPDATE product
+SET price = rec.price * v_increase
+WHERE pid = rec.pid;
 END LOOP;
 
-commit;
+COMMIT;
+
 DBMS_OUTPUT.PUT_LINE('Prices updated.');
 END;
 /
