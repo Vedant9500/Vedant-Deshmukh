@@ -1,0 +1,128 @@
+Microsoft Windows [Version 10.0.22631.5624]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Program Files\MongoDB\Server\8.2\bin>mongosh
+Current Mongosh Log ID: 68ef27d85cb35a1d9ccebea3
+Connecting to:          mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.5.8
+Using MongoDB:          8.2.1
+Using Mongosh:          2.5.8
+
+For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+
+------
+   The server generated these startup warnings when booting
+   2025-10-15T07:26:14.244+05:30: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+------
+
+test> use studinfo
+switched to db studinfo
+studinfo> db.createCollectiontion("Students");
+TypeError: db.createCollectiontion is not a function
+studinfo> db.createCollection("Students");
+{ ok: 1 }
+studinfo> db.students.insert({"rollno":46,"name":"Vedant","class":"TE"});
+DeprecationWarning: Collection.insert() is deprecated. Use insertOne, insertMany, or bulkWrite.
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId('68ef28a65cb35a1d9ccebea4') }
+}
+
+studinfo> db.students.find();
+[
+  {
+    _id: ObjectId('68ef28a65cb35a1d9ccebea4'),
+    rollno: 46,
+    name: 'Vedant',
+    class: 'TE'
+  }
+]
+studinfo> db.students.insert({"rollno":10,"name":"Atharv","class":"TE"});
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId('68ef29145cb35a1d9ccebea5') }
+}
+studinfo> db.students.find();
+[
+  {
+    _id: ObjectId('68ef28a65cb35a1d9ccebea4'),
+    rollno: 46,
+    name: 'Vedant',
+    class: 'TE'
+  },
+  {
+    _id: ObjectId('68ef29145cb35a1d9ccebea5'),
+    rollno: 10,
+    name: 'Atharv',
+    class: 'TE'
+  }
+]
+
+studinfo> db.students.update({rollno:10},{$set:{name:"Aryan"}});
+DeprecationWarning: Collection.update() is deprecated. Use updateOne, updateMany, or bulkWrite.
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+studinfo> db.students.find();
+[
+  {
+    _id: ObjectId('68ef28a65cb35a1d9ccebea4'),
+    rollno: 46,
+    name: 'Vedant',
+    class: 'TE'
+  },
+  {
+    _id: ObjectId('68ef29145cb35a1d9ccebea5'),
+    rollno: 10,
+    name: 'Aryan',
+    class: 'TE'
+  }
+]
+studinfo> db.students.deleteOne({rollno:10})
+{ acknowledged: true, deletedCount: 1 }
+studinfo> db.students.find();
+[
+  {
+    _id: ObjectId('68ef28a65cb35a1d9ccebea4'),
+    rollno: 46,
+    name: 'Vedant',
+    class: 'TE'
+  }
+]
+studinfo> db.students.insert({"rollno":40,"name":"Ayush","class":"TE"});
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId('68ef2a035cb35a1d9ccebea6') }
+}
+studinfo> db.students.updateMany({class:"TE"},{$set:{class:"third year"}});
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 2,
+  modifiedCount: 2,
+  upsertedCount: 0
+}
+
+studinfo> db.students.find();
+[
+  {
+    _id: ObjectId('68ef28a65cb35a1d9ccebea4'),
+    rollno: 46,
+    name: 'Vedant',
+    class: 'third year'
+  },
+  {
+    _id: ObjectId('68ef2a035cb35a1d9ccebea6'),
+    rollno: 40,
+    name: 'Ayush',
+    class: 'third year'
+  }
+]
+studinfo> db.students.deleteMany({class:"third year"})
+{ acknowledged: true, deletedCount: 2 }
+studinfo> db.students.find();
+
+studinfo>

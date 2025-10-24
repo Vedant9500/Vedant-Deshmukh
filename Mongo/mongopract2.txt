@@ -1,0 +1,289 @@
+
+C:\Program Files\MongoDB\Server\8.2\bin>mongosh
+Current Mongosh Log ID: 68ef2be035d0a87d2dcebea3
+Connecting to:          mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.5.8
+Using MongoDB:          8.2.1
+Using Mongosh:          2.5.8
+
+For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+
+------
+   The server generated these startup warnings when booting
+   2025-10-15T07:26:14.244+05:30: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+------
+
+test> use cricket
+switched to db cricket
+cricket> db.player.insertMany([
+...   {
+...     "playerid": 1,
+...     "name": "Virat Kohli",
+...     "role": "Batsman",
+...     "team": "India",
+...     "batting_style": "Right-hand",
+...     "bowling_style": "None",
+...     "matches_played": 275,
+...     "runs": 12000,
+...     "strike_rate": 92.5,
+...     "wickets": 4
+...   },
+...   {
+...     "playerid": 2,
+...     "name": "Jasprit Bumrah",
+...     "role": "Bowler",
+...     "team": "India",
+...     "batting_style": "Left-hand",
+...     "bowling_style": "Right-arm fast",
+...     "matches_played": 150,
+...     "runs": 500,
+...     "strike_rate": 65.2,
+...     "wickets": 210
+...   }
+... ]
+... )
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('68ef2c9d35d0a87d2dcebea4'),
+    '1': ObjectId('68ef2c9d35d0a87d2dcebea5')
+  }
+}
+
+cricket> show collections
+player
+cricket> db.player.inserto
+db.player.insertMany  db.player.insertOne
+
+cricket> db.player.insertOne({ playerid:3, name:"KL Rahul", role : "Wicket keeper",team:"India",batting_style:"Right-handed",bowling_style:"None",matches_played:85,runs:3043,strike_rate:88.18,wickets:8});
+{
+  acknowledged: true,
+  insertedId: ObjectId('68ef2eb835d0a87d2dcebea6')
+}
+cricket> db.player.insertOne({
+...   playerid: 4,
+...   name: "Hardik Pandya",
+...   role: "All-rounder",
+...   team: "India",
+...   batting_style: "Right-handed",
+...   bowling_style: "Right-arm fast-medium",
+...   matches_played: 87,
+...   runs: 1518,
+...   strike_rate: 110.43,
+...   wickets: 79
+... });
+...
+{
+  acknowledged: true,
+  insertedId: ObjectId('68ef2f0035d0a87d2dcebea7')
+}
+cricket> db.matches.insertOne({
+...   match_id: 103,
+...   teams: ["India", "South Africa"],
+...   toss: "South Africa",
+...   match_time: ISODate("2025-11-12T15:00:00Z"),
+...   result: "India won by 45 runs"
+... });
+...
+{
+  acknowledged: true,
+  insertedId: ObjectId('68ef2f6535d0a87d2dcebea8')
+}
+
+cricket> db.player.update({playerid:2},{$set:{batting_style:"Right_handed"}});
+DeprecationWarning: Collection.update() is deprecated. Use updateOne, updateMany, or bulkWrite.
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+cricket> db.player.find();
+[
+  {
+    _id: ObjectId('68ef2c9d35d0a87d2dcebea4'),
+    playerid: 1,
+    name: 'Virat Kohli',
+    role: 'Batsman',
+    team: 'India',
+    batting_style: 'Right-hand',
+    bowling_style: 'None',
+    matches_played: 275,
+    runs: 12000,
+    strike_rate: 92.5,
+    wickets: 4
+  },
+  {
+    _id: ObjectId('68ef2c9d35d0a87d2dcebea5'),
+    playerid: 2,
+    name: 'Jasprit Bumrah',
+    role: 'Bowler',
+    team: 'India',
+    batting_style: 'Right_handed',
+    bowling_style: 'Right-arm fast',
+    matches_played: 150,
+    runs: 500,
+    strike_rate: 65.2,
+    wickets: 210
+  },
+  {
+    _id: ObjectId('68ef2eb835d0a87d2dcebea6'),
+    playerid: 3,
+    name: 'KL Rahul',
+    role: 'Wicket keeper',
+    team: 'India',
+    batting_style: 'Right-handed',
+    bowling_style: 'None',
+    matches_played: 85,
+    runs: 3043,
+    strike_rate: 88.18,
+    wickets: 8
+  },
+  {
+    _id: ObjectId('68ef2f0035d0a87d2dcebea7'),
+    playerid: 4,
+    name: 'Hardik Pandya',
+    role: 'All-rounder',
+    team: 'India',
+    batting_style: 'Right-handed',
+    bowling_style: 'Right-arm fast-medium',
+    matches_played: 87,
+    runs: 1518,
+    strike_rate: 110.43,
+    wickets: 79
+  }
+]
+cricket> db.matches.find();
+[
+  {
+    _id: ObjectId('68ef2f6535d0a87d2dcebea8'),
+    match_id: 103,
+    teams: [ 'India', 'South Africa' ],
+    toss: 'South Africa',
+    match_time: ISODate('2025-11-12T15:00:00.000Z'),
+    result: 'India won by 45 runs'
+  }
+]
+cricket> db.player.find({strike_rate:{$gt:50},role:"Batsman"});
+[
+  {
+    _id: ObjectId('68ef2c9d35d0a87d2dcebea4'),
+    playerid: 1,
+    name: 'Virat Kohli',
+    role: 'Batsman',
+    team: 'India',
+    batting_style: 'Right-hand',
+    bowling_style: 'None',
+    matches_played: 275,
+    runs: 12000,
+    strike_rate: 92.5,
+    wickets: 4
+  }
+]
+cricket> db.matches.insertOne({
+...   match_id: 104,
+...   teams: ["India", "New Zealand"],
+...   toss: null,
+...   match_time: ISODate("2025-12-03T13:30:00Z"),
+...   result: "Match canceled due to rain"
+... });
+...
+{
+  acknowledged: true,
+  insertedId: ObjectId('68ef30c235d0a87d2dcebea9')
+}
+
+cricket> db.player.updateOne(
+...
+... { playerid: 1},
+...
+... { $inc: { runs: 75, matches_played: 1 } }
+...
+... )
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+cricket> db.matches.deleteMany({ result: "Match canceled due to rain" })
+{ acknowledged: true, deletedCount: 1 }
+cricket> db.player.find();
+[
+  {
+    _id: ObjectId('68ef2c9d35d0a87d2dcebea4'),
+    playerid: 1,
+    name: 'Virat Kohli',
+    role: 'Batsman',
+    team: 'India',
+    batting_style: 'Right-hand',
+    bowling_style: 'None',
+    matches_played: 276,
+    runs: 12075,
+    strike_rate: 92.5,
+    wickets: 4
+  },
+  {
+    _id: ObjectId('68ef2c9d35d0a87d2dcebea5'),
+    playerid: 2,
+    name: 'Jasprit Bumrah',
+    role: 'Bowler',
+    team: 'India',
+    batting_style: 'Right_handed',
+    bowling_style: 'Right-arm fast',
+    matches_played: 150,
+    runs: 500,
+    strike_rate: 65.2,
+    wickets: 210
+  },
+  {
+    _id: ObjectId('68ef2eb835d0a87d2dcebea6'),
+    playerid: 3,
+    name: 'KL Rahul',
+    role: 'Wicket keeper',
+    team: 'India',
+    batting_style: 'Right-handed',
+    bowling_style: 'None',
+    matches_played: 85,
+    runs: 3043,
+    strike_rate: 88.18,
+    wickets: 8
+  },
+  {
+    _id: ObjectId('68ef2f0035d0a87d2dcebea7'),
+    playerid: 4,
+    name: 'Hardik Pandya',
+    role: 'All-rounder',
+    team: 'India',
+    batting_style: 'Right-handed',
+    bowling_style: 'Right-arm fast-medium',
+    matches_played: 87,
+    runs: 1518,
+    strike_rate: 110.43,
+    wickets: 79
+  }
+]
+
+cricket> db.teams.insertOne({ teamid: 1, team_name: "India", Captain: "Virat Kohli", players: ["Virat Kohli", "Jasprit Bumrah", "KL Rahul", "Hardik Pandya"]});
+{
+  acknowledged: true,
+  insertedId: ObjectId('68ef32e835d0a87d2dcebeab')
+}
+cricket> db.player.find({ wickets: { $gt: 100 } })
+[
+  {
+    _id: ObjectId('68ef2c9d35d0a87d2dcebea5'),
+    playerid: 2,
+    name: 'Jasprit Bumrah',
+    role: 'Bowler',
+    team: 'India',
+    batting_style: 'Right_handed',
+    bowling_style: 'Right-arm fast',
+    matches_played: 150,
+    runs: 500,
+    strike_rate: 65.2,
+    wickets: 210
+  }
+]
+cricket>
