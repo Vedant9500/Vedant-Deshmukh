@@ -1,0 +1,240 @@
+from pymongo import MongoClient
+
+# Establish connection to MongoDB
+mongo_client = MongoClient("mongodb://localhost:27017/")
+
+# Get database and collection names from user
+database_name = input("Enter database name: ")
+my_database = mongo_client[database_name]
+
+collection_name = input("Enter collection name: ")
+my_collection = my_database[collection_name]
+
+print(f"\n✓ Collection '{collection_name}' is ready to use!\n")
+
+# Main program loop
+while True:
+    print("="*50)
+    print("        PRODUCT MANAGEMENT SYSTEM")
+    print("="*50)
+    print("[1] Add New Product")
+    print("[2] View All Products")
+    print("[3] Find Product by ID")
+    print("[4] Remove Product by ID")
+    print("[5] Exit Program")
+    print("="*50)
+    
+    try:
+        user_choice = int(input("Select an option (1-5): "))
+    try:
+        user_choice = int(input("Select an option (1-5): "))
+    except ValueError:
+        print("\n⚠ Invalid input! Please enter a number between 1-5.\n")
+        continue
+
+    if user_choice == 1:
+        # Insert new product
+        print("\n--- Add New Product ---")
+        product_id = int(input("Product ID: "))
+        product_name = input("Product Name: ")
+        product_price = float(input("Product Price (₹): "))
+        
+        new_product = {
+            "pid": product_id,
+            "pname": product_name,
+            "pprice": product_price
+        }
+        my_collection.insert_one(new_product)
+        print(f"\n✓ Product '{product_name}' added successfully!\n")
+
+    elif user_choice == 2:
+        # Display all products
+        print("\n" + "="*50)
+        print("           ALL PRODUCTS")
+        print("="*50)
+        
+        total_products = my_collection.count_documents({})
+        if total_products == 0:
+            print("No products available in the database.")
+        else:
+            for product in my_collection.find():
+                print(f"ID: {product['pid']} | Product: {product['pname']} | Price: ₹{product['pprice']}")
+        print("="*50 + "\n")
+
+    elif user_choice == 3:
+        # Search product by ID
+        search_id = int(input("\nEnter Product ID to search: "))
+        found_product = my_collection.find_one({"pid": search_id})
+        
+        if found_product:
+            print("\n✓ Product Details:")
+            print(f"  ID: {found_product['pid']}")
+            print(f"  Name: {found_product['pname']}")
+            print(f"  Price: ₹{found_product['pprice']}\n")
+        else:
+            print(f"\n✗ No product found with ID: {search_id}\n")
+
+    elif user_choice == 4:
+        # Delete product by ID
+        delete_id = int(input("\nEnter Product ID to delete: "))
+        deletion_result = my_collection.delete_one({"pid": delete_id})
+        
+        if deletion_result.deleted_count > 0:
+            print(f"\n✓ Product with ID {delete_id} deleted successfully!\n")
+        else:
+            print(f"\n✗ No product found with ID: {delete_id}\n")
+
+    elif user_choice == 5:
+        # Exit program
+        print("\n" + "="*50)
+        print("   Thank you for using Product Management System!")
+        print("="*50)
+        break
+
+    else:
+        print("\n⚠ Invalid option! Please select between 1-5.\n")
+
+Output:
+Enter database name: product_db
+Enter collection name: products
+
+✓ Collection 'products' is ready to use!
+
+==================================================
+        PRODUCT MANAGEMENT SYSTEM
+==================================================
+[1] Add New Product
+[2] View All Products
+[3] Find Product by ID
+[4] Remove Product by ID
+[5] Exit Program
+==================================================
+Select an option (1-5): 1
+
+--- Add New Product ---
+Product ID: 10
+Product Name: apple iphone15
+Product Price (₹): 70000
+
+✓ Product 'apple iphone15' added successfully!
+
+==================================================
+        PRODUCT MANAGEMENT SYSTEM
+==================================================
+[1] Add New Product
+[2] View All Products
+[3] Find Product by ID
+[4] Remove Product by ID
+[5] Exit Program
+==================================================
+Select an option (1-5): 1
+
+--- Add New Product ---
+Product ID: 11
+Product Name: samsung s24
+Product Price (₹): 75000
+
+✓ Product 'samsung s24' added successfully!
+
+==================================================
+        PRODUCT MANAGEMENT SYSTEM
+==================================================
+[1] Add New Product
+[2] View All Products
+[3] Find Product by ID
+[4] Remove Product by ID
+[5] Exit Program
+==================================================
+Select an option (1-5): 1
+
+--- Add New Product ---
+Product ID: 12
+Product Name: oneplus 12
+Product Price (₹): 30000
+
+✓ Product 'oneplus 12' added successfully!
+
+==================================================
+        PRODUCT MANAGEMENT SYSTEM
+==================================================
+[1] Add New Product
+[2] View All Products
+[3] Find Product by ID
+[4] Remove Product by ID
+[5] Exit Program
+==================================================
+Select an option (1-5): 2
+
+==================================================
+           ALL PRODUCTS
+==================================================
+ID: 10 | Product: apple iphone15 | Price: ₹70000.0
+ID: 11 | Product: samsung s24 | Price: ₹75000.0
+ID: 12 | Product: oneplus 12 | Price: ₹30000.0
+==================================================
+
+==================================================
+        PRODUCT MANAGEMENT SYSTEM
+==================================================
+[1] Add New Product
+[2] View All Products
+[3] Find Product by ID
+[4] Remove Product by ID
+[5] Exit Program
+==================================================
+Select an option (1-5): 3
+
+Enter Product ID to search: 12
+
+✓ Product Details:
+  ID: 12
+  Name: oneplus 12
+  Price: ₹30000.0
+
+==================================================
+        PRODUCT MANAGEMENT SYSTEM
+==================================================
+[1] Add New Product
+[2] View All Products
+[3] Find Product by ID
+[4] Remove Product by ID
+[5] Exit Program
+==================================================
+Select an option (1-5): 4
+
+Enter Product ID to delete: 12
+
+✓ Product with ID 12 deleted successfully!
+
+==================================================
+        PRODUCT MANAGEMENT SYSTEM
+==================================================
+[1] Add New Product
+[2] View All Products
+[3] Find Product by ID
+[4] Remove Product by ID
+[5] Exit Program
+==================================================
+Select an option (1-5): 2
+
+==================================================
+           ALL PRODUCTS
+==================================================
+ID: 10 | Product: apple iphone15 | Price: ₹70000.0
+ID: 11 | Product: samsung s24 | Price: ₹75000.0
+==================================================
+
+==================================================
+        PRODUCT MANAGEMENT SYSTEM
+==================================================
+[1] Add New Product
+[2] View All Products
+[3] Find Product by ID
+[4] Remove Product by ID
+[5] Exit Program
+==================================================
+Select an option (1-5): 5
+
+==================================================
+   Thank you for using Product Management System!
+==================================================

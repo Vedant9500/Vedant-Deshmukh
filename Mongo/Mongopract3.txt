@@ -1,0 +1,130 @@
+C:\Program Files\MongoDB\Server\8.2\bin>mongosh
+Current Mongosh Log ID: 68ef95db189663d1e8cebea3
+Connecting to:          mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.5.8
+Using MongoDB:          8.2.1
+Using Mongosh:          2.5.8
+
+For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+
+------
+   The server generated these startup warnings when booting
+   2025-10-15T11:36:55.512+05:30: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+------
+
+test> show dbs;
+studinfo      32.00 KiB
+test> use employee_db;
+switched to db employee_db
+employee_db> db.createCollection("Employee");
+{ ok: 1 }
+employee_db> db.employee.insertOne({empid:10,ename:'Ayush',salary:100000,dept:'CE'});
+{
+  acknowledged: true,
+  insertedId: ObjectId('68ef964a189663d1e8cebea4')
+}
+employee_db> db.employee.insertOne({empid:11,ename:'Sarvesh',salary:90000,dept:'IT'});
+{
+  acknowledged: true,
+  insertedId: ObjectId('68ef969b189663d1e8cebea5')
+}
+employee_db> db.employee.insertOne({empid:12,ename:'Sarthak',salary:50000,dept:'Mech'});
+{
+  acknowledged: true,
+  insertedId: ObjectId('68ef96b4189663d1e8cebea6')
+}
+employee_db> db.employee.insertOne({empid:14,ename:'Utkarsha',salary:40000,dept:'Civil'});
+{
+  acknowledged: true,
+  insertedId: ObjectId('68ef96d3189663d1e8cebea7')
+}
+employee_db> db.employee.aggregate([{$group:{_id:null,total_pay:{$sum:'$salary'}}}]);
+[ { _id: null, total_pay: 280000 } ]
+employee_db> db.employee.aggregate([{$group:{_id:null,total_pay:{$min:'$salary'}}}]);
+[ { _id: null, total_pay: 40000 } ]
+employee_db> db.employee.aggregate([{$group:{_id:null,total_pay:{$max:'$salary'}}}]);
+[ { _id: null, total_pay: 100000 } ]
+employee_db> db.employee.aggregate([{$group:{_id:null,total_pay:{$push:'$salary'}}}]);
+[ { _id: null, total_pay: [ 100000, 90000, 50000, 40000 ] } ]
+employee_db> db.employee.aggregate([{$group:{_id:null,total_pay:{$avg:'$salary'}}}]);
+[ { _id: null, total_pay: 70000 } ]
+employee_db> db.employee.aggregate([{$group:{_id:null,total_pay:{$addToSet:'$salary'}}}]);
+[ { _id: null, total_pay: [ 90000, 100000, 50000, 40000 ] } ]
+employee_db> db.employee.find().sort({ename:1});
+[
+  {
+    _id: ObjectId('68ef964a189663d1e8cebea4'),
+    empid: 10,
+    ename: 'Ayush',
+    salary: 100000,
+    dept: 'CE'
+  },
+  {
+    _id: ObjectId('68ef969b189663d1e8cebea5'),
+    empid: 11,
+    ename: 'Sarvesh',
+    salary: 90000,
+    dept: 'IT'
+  },
+  {
+    _id: ObjectId('68ef96b4189663d1e8cebea6'),
+    empid: 12,
+    ename: 'Sarthak',
+    salary: 50000,
+    dept: 'Mech'
+  },
+  {
+    _id: ObjectId('68ef96d3189663d1e8cebea7'),
+    empid: 14,
+    ename: 'Utkarsha',
+    salary: 40000,
+    dept: 'Civil'
+  }
+]
+employee_db> db.employee.find().sort({ename:-1});
+[
+  {
+    _id: ObjectId('68ef96d3189663d1e8cebea7'),
+    empid: 14,
+    ename: 'Utkarsha',
+    salary: 40000,
+    dept: 'Civil'
+  },
+  {
+    _id: ObjectId('68ef96b4189663d1e8cebea6'),
+    empid: 12,
+    ename: 'Sarthak',
+    salary: 50000,
+    dept: 'Mech'
+  },
+  {
+    _id: ObjectId('68ef969b189663d1e8cebea5'),
+    empid: 11,
+    ename: 'Sarvesh',
+    salary: 90000,
+    dept: 'IT'
+  },
+  {
+    _id: ObjectId('68ef964a189663d1e8cebea4'),
+    empid: 10,
+    ename: 'Ayush',
+    salary: 100000,
+    dept: 'CE'
+  }
+]
+employee_db> db.employee.createIndex({ empid:10})
+empid_10
+employee_db> db.employee.createIndex({ ename:1})
+ename_1
+employee_db> db.employee.createIndex({ salary:1})
+salary_1
+employee_db> db.employee.createIndex({ dept:1})
+dept_1
+employee_db> db.employee.getIndexes();
+[
+  { v: 2, key: { _id: 1 }, name: '_id_' },
+  { v: 2, key: { empid: 10 }, name: 'empid_10' },
+  { v: 2, key: { ename: 1 }, name: 'ename_1' },
+  { v: 2, key: { salary: 1 }, name: 'salary_1' },
+  { v: 2, key: { dept: 1 }, name: 'dept_1' }
+]
+employee_db>
